@@ -1,0 +1,12 @@
+{
+  "domain": "trello",
+  "name": "Trello",
+  "codeowners": ["@ianpleasance"],
+  "config_flow": true,
+  "documentation": "https://github.com/ianpleasance/home-assistant-trello",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/ianpleasance/home-assistant-trello/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

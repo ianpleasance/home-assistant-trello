@@ -1,0 +1,311 @@
+views:
+  - title: Trello
+    path: trello
+    icon: mdi:trello
+    badges: []
+    cards:
+      - type: markdown
+        content: >
+          # 📋 Trello Dashboard
+
+          {% set account = 'sensor.trello_planetbuilders_account_boards' %}
+
+          {% if states(account) != 'unavailable' %}
+
+          **{{ state_attr(account, 'total_open') }} Open Boards** • {{
+          state_attr(account, 'total_monitored') }} Monitored • {{
+          state_attr(account, 'total_unmonitored') }} Unmonitored • {{
+          state_attr(account, 'total_closed') }} Archived
+
+          {% else %}
+
+          **Trello Integration Not Found** - Please configure the integration
+          first
+
+          {% endif %}
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: entity
+            entity: sensor.trello_planetbuilders_account_boards
+            name: Total Open Boards
+            icon: mdi:view-dashboard
+          - type: markdown
+            content: >
+              ### 👁️ Monitored
+
+              ## {{ state_attr('sensor.trello_planetbuilders_account_boards',
+              'total_monitored') }}
+            style: |
+              ha-card {
+                text-align: center;
+              }
+          - type: markdown
+            content: >
+              ### 👀 Unmonitored
+
+              ## {{ state_attr('sensor.trello_planetbuilders_account_boards',
+              'total_unmonitored') }}
+            style: |
+              ha-card {
+                text-align: center;
+              }
+      - type: markdown
+        content: >
+          ## 📊 Account Summary
+
+
+          | Metric | Count |
+
+          |--------|-------|
+
+          | 📂 Open Boards | {{
+          state_attr('sensor.trello_planetbuilders_account_boards',
+          'total_open') }} |
+
+          | 👁️ Monitored Boards | {{
+          state_attr('sensor.trello_planetbuilders_account_boards',
+          'total_monitored') }} |
+
+          | 👀 Unmonitored Boards | {{
+          state_attr('sensor.trello_planetbuilders_account_boards',
+          'total_unmonitored') }} |
+
+          | 📦 Archived Boards | {{
+          state_attr('sensor.trello_planetbuilders_account_boards',
+          'total_closed') }} |
+      - type: markdown
+        content: >
+          ## 📚 All Your Boards
+
+
+          {% set all_boards =
+          state_attr('sensor.trello_planetbuilders_account_boards',
+          'open_boards') %}
+
+          {% if all_boards and all_boards is iterable and all_boards is not
+          string %}
+
+          | Board | Status | Lists | Cards |
+
+          |-------|--------|-------|-------|
+
+          {% for board in all_boards | sort(attribute='name') %}
+
+          | [{{ board.name }}]({{ board.url }}) | {{ '✅ Monitored' if
+          board.monitored else '⚪ Not Monitored' }} | {{ board.lists if
+          board.monitored else '-' }} | {{ board.total_cards if board.monitored
+          else '-' }} |
+
+          {% endfor %}
+
+          {% else %}
+
+          No boards available. The integration may still be loading data.
+
+
+          Check: Settings → Devices & Services → Trello →
+          sensor.trello_planetbuilders_account_boards
+
+          {% endif %}
+      - type: markdown
+        content: |
+          ## 🎯 Monitored Board Statistics
+
+          {% for state in states.sensor %}
+            {% if state.entity_id.startswith('sensor.trello_planetbuilders_') and state.entity_id.endswith('_board') %}
+
+          ### {{ state.name }}
+          - **Lists:** {{ states(state.entity_id) }}
+          - **Total Cards:** {{ state.attributes.total_cards | default(0) }}
+          - **Overdue:** {{ state.attributes.overdue_cards | default(0) }}
+          - **Due Soon:** {{ state.attributes.due_soon_cards | default(0) }}
+
+          [Open in Trello]({{ state.attributes.board_url }})
+            {% endif %}
+          {% endfor %}
+      - type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.trello_planetbuilders_account_boards
+            attribute: total_monitored
+            above: 0
+        card:
+          type: markdown
+          content: |
+            ## ⚠️ Cards Requiring Attention
+
+            {% set found = false %}
+            {% for state in states.sensor %}
+              {% if state.entity_id.startswith('sensor.trello_planetbuilders_') and state.entity_id.endswith('_board') %}
+                {% set overdue = state.attributes.get('overdue_cards', 0) | int %}
+                {% set due_soon = state.attributes.get('due_soon_cards', 0) | int %}
+                {% if overdue > 0 or due_soon > 0 %}
+                  {% set found = true %}
+            ### {{ state.attributes.board_name or state.name }}
+                  {% if overdue > 0 %}
+            - ⚠️ **{{ overdue }} overdue** card{{ 's' if overdue > 1 else '' }}
+                  {% endif %}
+                  {% if due_soon > 0 %}
+            - ⏰ **{{ due_soon }} due soon** (within 7 days)
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            {% if not found %}
+            ✅ **All caught up!** No overdue or upcoming due dates.
+            {% endif %}
+      - type: markdown
+        content: |
+          ## 📝 Lists Overview
+
+          {% for board_state in states.sensor %}
+            {% if board_state.entity_id.startswith('sensor.trello_planetbuilders_') and board_state.entity_id.endswith('_board') %}
+
+          ### {{ board_state.attributes.board_name or board_state.name }}
+
+          {% set lists = board_state.attributes.get('lists', []) %}
+          {% if lists %}
+          | List | Cards |
+          |------|-------|
+          {% for list in lists | sort(attribute='name') %}
+          | {{ list.name }} | {{ list.card_count }} |
+          {% endfor %}
+          {% else %}
+          No lists found
+          {% endif %}
+            {% endif %}
+          {% endfor %}
+      - type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.trello_planetbuilders_account_boards
+            attribute: total_unmonitored
+            above: 0
+        card:
+          type: markdown
+          content: >
+            ## 👀 Boards Not Being Monitored
+
+
+            {% set all_boards =
+            state_attr('sensor.trello_planetbuilders_account_boards',
+            'all_boards') %}
+
+            {% if all_boards and all_boards is iterable and all_boards is not
+            string %}
+
+            These boards exist in your account but are not being monitored:
+
+
+            {% for board in all_boards | sort(attribute='name') %}
+              {% if not board.monitored and not board.closed %}
+            - [{{ board.name }}]({{ board.url }})
+              {% endif %}
+            {% endfor %}
+
+
+            To monitor these boards, reconfigure the integration and select
+            them.
+
+            {% else %}
+
+            No additional boards found.
+
+            {% endif %}
+      - type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.trello_planetbuilders_account_boards
+            attribute: total_closed
+            above: 0
+        card:
+          type: markdown
+          content: >
+            ## 📦 Archived Boards
+
+
+            {% set all_boards =
+            state_attr('sensor.trello_planetbuilders_account_boards',
+            'all_boards') %}
+
+            {% if all_boards and all_boards is iterable and all_boards is not
+            string %}
+
+            {% for board in all_boards | sort(attribute='name') %}
+              {% if board.closed %}
+            - [{{ board.name }}]({{ board.url }}) - Archived
+              {% endif %}
+            {% endfor %}
+
+            {% else %}
+
+            No archived boards found.
+
+            {% endif %}
+      - type: markdown
+        content: >
+          ## 📈 Quick Stats
+
+
+          {% set ns = namespace(total_cards=0, overdue=0, due_soon=0,
+          total_lists=0) %}
+
+          {% for state in states.sensor %}
+            {% if state.entity_id.endswith('_board') %}
+              {% set ns.total_cards = ns.total_cards + (state.attributes.total_cards | int(0)) %}
+              {% set ns.overdue = ns.overdue + (state.attributes.overdue_cards | int(0)) %}
+              {% set ns.due_soon = ns.due_soon + (state.attributes.due_soon_cards | int(0)) %}
+              {% set ns.total_lists = ns.total_lists + (states(state.entity_id) | int(0)) %}
+            {% endif %}
+          {% endfor %}
+
+
+          | Metric | Count |
+
+          |--------|-------|
+
+          | 📋 Total Lists | {{ ns.total_lists }} |
+
+          | 📝 Total Cards | {{ ns.total_cards }} |
+
+          | ⚠️ Overdue Cards | {{ ns.overdue }} |
+
+          | ⏰ Due Soon (7 days) | {{ ns.due_soon }} |
+
+          | 👁️ Monitored Boards | {{
+          state_attr('sensor.trello_planetbuilders_account_boards',
+          'total_monitored') }} |
+      - type: markdown
+        content: >
+          ---
+
+          ### 💡 Dashboard Tips
+
+
+          **Customization:**
+
+          - Click any board name to open it in Trello
+
+          - Edit this dashboard to add/remove sections
+
+          - Use the YAML editor for full control
+
+
+          **Refresh Data:**
+
+          The integration updates every {{ states.sensor |
+          selectattr('entity_id', 'search', '_board$') |
+          map(attribute='entity_id') | list | count > 0 and '5' or 'N/A' }}
+          minutes by default. Change this in integration settings.
+
+
+          **Add More Features:**
+
+          - Create automations for overdue card alerts
+
+          - Set up notifications for new cards
+
+          - Track completion rates with template sensors
+

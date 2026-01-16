@@ -1,0 +1,42 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Trello",
+        "description": "Enter your Trello API credentials. Get your API key and generate a token at: {docs_url}",
+        "data": {
+          "api_key": "API Key",
+          "api_token": "API Token"
+        }
+      },
+      "boards": {
+        "title": "Select Boards",
+        "description": "Select the Trello boards you want to monitor. {board_count} boards available.",
+        "data": {
+          "boards": "Boards to Monitor",
+          "update_interval": "Update Interval (minutes)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to Trello. Please check your credentials.",
+      "invalid_auth": "Invalid API key or token. Please check your credentials.",
+      "unknown": "Unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This Trello account is already configured.",
+      "no_boards": "No boards found in your Trello account."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Trello Options",
+        "description": "Configure update settings for your Trello integration.",
+        "data": {
+          "update_interval": "Update Interval (minutes)"
+        }
+      }
+    }
+  }
+}

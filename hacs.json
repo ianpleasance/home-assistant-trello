@@ -1,0 +1,9 @@
+{
+  "name": "Trello",
+  "content_in_root": false,
+  "filename": "trello",
+  "render_readme": true,
+  "domains": ["trello"],
+  "homeassistant": "2024.1.0",
+  "iot_class": "Cloud Polling"
+}

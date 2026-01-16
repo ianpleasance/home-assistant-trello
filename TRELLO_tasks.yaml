@@ -1,0 +1,160 @@
+views:
+  - title: Trello Tasks
+    path: trello-tasks
+    icon: mdi:view-column
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 📋 Monitored Boards
+          Your active Trello boards with all lists and cards
+      - type: markdown
+        content: >
+          {% set board = states['sensor.trello_planetbuilders_house_diy_jobs']
+          %}
+
+          {% if board %}
+
+          # 📊 {{ board.name }}
+
+
+          **{{ states(board.entity_id) }} Lists** • **{{
+          board.attributes.total_cards | default(0) }} Cards**{% if
+          board.attributes.overdue_cards | default(0) > 0 %} • ⚠️ **{{
+          board.attributes.overdue_cards }} Overdue**{% endif %}
+
+
+          [Open Board in Trello ↗]({{ board.attributes.board_url }})
+
+            {% for list_state in states.sensor %}
+              {% if list_state.entity_id.startswith('sensor.trello_planetbuilders_house_diy_jobs_') %}
+
+          ## 📝 {{ list_state.name.replace('House Diy Jobs ', '') }} ({{
+          states(list_state.entity_id) }})
+
+                {% set cards = list_state.attributes.get('cards', []) %}
+                {% if cards %}
+                  {% for card in cards %}
+                    {% if not card.closed and not card.due_complete %}
+
+          ### {{ card.name }}
+
+                      {% if card.due %}
+          🗓️ **Due:** {{ card.due[:10] }}{% if card.due < now().isoformat() %}
+          ⚠️ **OVERDUE**{% endif %}
+                      {% endif %}
+                      {% if card.labels %}
+          🏷️ {{ card.labels | join(', ') }}
+                      {% endif %}
+                      {% if card.members %}
+          👤 {{ card.members | join(', ') }}
+                      {% endif %}
+                      {% if card.checklist_items > 0 %}
+          ✅ Checklist: {{ card.checklist_items_checked }}/{{
+          card.checklist_items }}
+                      {% endif %}
+                      {% if card.attachments > 0 %}
+          📎 {{ card.attachments }} attachment{{ 's' if card.attachments != 1
+          else '' }}
+                      {% endif %}
+                      {% if card.comments > 0 %}
+          💬 {{ card.comments }} comment{{ 's' if card.comments != 1 else '' }}
+                      {% endif %}
+                      {% if card.description %}
+
+          > {{ card.description[:150] }}{% if card.description | length > 150
+          %}...{% endif %}
+                      {% endif %}
+
+          [Open Card ↗]({{ card.url }})
+
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+
+          *No cards in this list*
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% else %}
+
+
+          Board sensor not found.
+
+          {% endif %}
+      - type: markdown
+        content: >
+          ---
+
+
+          {% set board = states['sensor.trello_planetbuilders_personal_jobs'] %}
+
+          {% if board %}
+
+          # 📊 {{ board.name }}
+
+
+          **{{ states(board.entity_id) }} Lists** • **{{
+          board.attributes.total_cards | default(0) }} Cards**{% if
+          board.attributes.overdue_cards | default(0) > 0 %} • ⚠️ **{{
+          board.attributes.overdue_cards }} Overdue**{% endif %}
+
+
+          [Open Board in Trello ↗]({{ board.attributes.board_url }})
+
+            {% for list_state in states.sensor %}
+              {% if list_state.entity_id.startswith('sensor.trello_planetbuilders_personal_jobs_') %}
+
+          ## 📝 {{ list_state.name.replace('Personal Jobs ', '') }} ({{
+          states(list_state.entity_id) }})
+
+                {% set cards = list_state.attributes.get('cards', []) %}
+                {% if cards %}
+                  {% for card in cards %}
+                    {% if not card.closed and not card.due_complete %}
+
+          ### {{ card.name }}
+
+                      {% if card.due %}
+          🗓️ **Due:** {{ card.due[:10] }}{% if card.due < now().isoformat() %}
+          ⚠️ **OVERDUE**{% endif %}
+                      {% endif %}
+                      {% if card.labels %}
+          🏷️ {{ card.labels | join(', ') }}
+                      {% endif %}
+                      {% if card.members %}
+          👤 {{ card.members | join(', ') }}
+                      {% endif %}
+                      {% if card.checklist_items > 0 %}
+          ✅ Checklist: {{ card.checklist_items_checked }}/{{
+          card.checklist_items }}
+                      {% endif %}
+                      {% if card.attachments > 0 %}
+          📎 {{ card.attachments }} attachment{{ 's' if card.attachments != 1
+          else '' }}
+                      {% endif %}
+                      {% if card.comments > 0 %}
+          💬 {{ card.comments }} comment{{ 's' if card.comments != 1 else '' }}
+                      {% endif %}
+                      {% if card.description %}
+
+          > {{ card.description[:150] }}{% if card.description | length > 150
+          %}...{% endif %}
+                      {% endif %}
+
+          [Open Card ↗]({{ card.url }})
+
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+
+          *No cards in this list*
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% else %}
+
+
+          Board sensor not found.
+
+          {% endif %}
