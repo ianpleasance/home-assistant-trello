@@ -141,6 +141,7 @@ class TrelloAccountSensor(CoordinatorEntity, SensorEntity):
             "total_closed": len(closed_boards),
             "total_monitored": len([b for b in boards_list if b["monitored"]]),
             "total_unmonitored": len([b for b in boards_list if not b["monitored"]]),
+            "last_updated": datetime.now().isoformat(),
         }
 
         _LOGGER.debug(
@@ -239,6 +240,7 @@ class TrelloBoardSensor(CoordinatorEntity, SensorEntity):
             "total_cards": total_cards,
             "overdue_cards": overdue_cards,
             "due_soon_cards": due_soon_cards,
+            "last_updated": datetime.now().isoformat(),
             "lists": [
                 {
                     "id": list_id,
@@ -323,6 +325,7 @@ class TrelloListSensor(CoordinatorEntity, SensorEntity):
             "list_id": list_data.get("id"),
             "closed": list_data.get("closed", False),
             "cards": list_data.get("cards", []),
+            "last_updated": datetime.now().isoformat(),
         }
 
         return attributes
