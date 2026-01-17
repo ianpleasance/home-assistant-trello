@@ -1,0 +1,12 @@
+refresh:
+  name: Refresh Trello Data
+  description: Force an immediate refresh of Trello data for all monitored boards
+  fields:
+    config_entry_id:
+      name: Config Entry ID
+      description: The config entry ID to refresh (leave empty to refresh all Trello integrations)
+      required: false
+      example: "abc123def456"
+      selector:
+        text:
+

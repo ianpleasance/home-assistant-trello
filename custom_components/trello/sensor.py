@@ -329,3 +329,4 @@ class TrelloListSensor(CoordinatorEntity, SensorEntity):
         }
 
         return attributes
+

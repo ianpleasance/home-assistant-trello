@@ -93,6 +93,30 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
+    # Register services
+    async def handle_refresh(call):
+        """Handle the refresh service call."""
+        config_entry_id = call.data.get("config_entry_id")
+        
+        if config_entry_id:
+            # Refresh specific entry
+            if config_entry_id in hass.data[DOMAIN]:
+                _LOGGER.info("Refreshing Trello data for config entry: %s", config_entry_id)
+                await hass.data[DOMAIN][config_entry_id].async_refresh()
+            else:
+                _LOGGER.error("Config entry ID not found: %s", config_entry_id)
+        else:
+            # Refresh all entries
+            _LOGGER.info("Refreshing all Trello integrations")
+            for coordinator in hass.data[DOMAIN].values():
+                if isinstance(coordinator, TrelloDataUpdateCoordinator):
+                    await coordinator.async_refresh()
+
+    # Only register the service once (first entry)
+    if not hass.services.has_service(DOMAIN, "refresh"):
+        hass.services.async_register(DOMAIN, "refresh", handle_refresh)
+        _LOGGER.info("Registered Trello refresh service")
+
     return True
 
 
@@ -100,6 +124,12 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
         hass.data[DOMAIN].pop(entry.entry_id)
+        
+        # Unregister service if this was the last entry
+        if not hass.data[DOMAIN]:
+            if hass.services.has_service(DOMAIN, "refresh"):
+                hass.services.async_remove(DOMAIN, "refresh")
+                _LOGGER.info("Unregistered Trello refresh service")
 
     return unload_ok
 
@@ -270,3 +300,4 @@ class TrelloDataUpdateCoordinator(DataUpdateCoordinator):
             len(data.get("boards", {}))
         )
         return data
+
