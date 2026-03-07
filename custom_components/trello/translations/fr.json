@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connexion à Trello",
+        "description": "Entrez vos identifiants API Trello. Obtenez votre clé API et générez un jeton sur : {docs_url}",
+        "data": {
+          "api_key": "Clé API",
+          "api_token": "Jeton API"
+        }
+      },
+      "boards": {
+        "title": "Sélectionner les tableaux",
+        "description": "Sélectionnez les tableaux Trello à surveiller. {board_count} tableaux disponibles.",
+        "data": {
+          "boards": "Tableaux à surveiller",
+          "update_interval": "Intervalle de mise à jour (minutes)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible de se connecter à Trello. Vérifiez vos identifiants.",
+      "invalid_auth": "Clé API ou jeton invalide. Vérifiez vos identifiants.",
+      "unknown": "Erreur inattendue."
+    },
+    "abort": {
+      "already_configured": "Ce compte Trello est déjà configuré.",
+      "no_boards": "Aucun tableau trouvé dans votre compte Trello."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options Trello",
+        "description": "Configurer les paramètres de mise à jour.",
+        "data": {
+          "update_interval": "Intervalle de mise à jour (minutes)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Actualiser",
+      "description": "Force une actualisation immédiate des données Trello.",
+      "fields": {
+        "config_entry_id": {
+          "name": "ID d'entrée de configuration",
+          "description": "ID de l'entrée à actualiser. Si omis, toutes les entrées sont actualisées."
+        }
+      }
+    }
+  }
+}

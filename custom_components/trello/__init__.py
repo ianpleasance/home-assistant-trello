@@ -245,6 +245,7 @@ class TrelloDataUpdateCoordinator(DataUpdateCoordinator):
                         cards_params = {
                             **params,
                             "fields": "id,name,url,closed,due,dueComplete,desc,labels,idMembers,badges",
+                            "filter": "open",
                             "members": "true",
                             "member_fields": "fullName,username",
                         }

@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Trelloに接続",
+        "description": "Trello APIの認証情報を入力してください。APIキーの取得とトークンの生成は: {docs_url}",
+        "data": {
+          "api_key": "APIキー",
+          "api_token": "APIトークン"
+        }
+      },
+      "boards": {
+        "title": "ボードを選択",
+        "description": "監視するTrelloボードを選択してください。{board_count}個のボードが利用可能です。",
+        "data": {
+          "boards": "監視するボード",
+          "update_interval": "更新間隔（分）"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Trelloへの接続に失敗しました。認証情報を確認してください。",
+      "invalid_auth": "APIキーまたはトークンが無効です。認証情報を確認してください。",
+      "unknown": "予期しないエラーが発生しました。"
+    },
+    "abort": {
+      "already_configured": "このTrelloアカウントはすでに設定されています。",
+      "no_boards": "Trelloアカウントにボードが見つかりませんでした。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Trelloオプション",
+        "description": "更新設定を構成します。",
+        "data": {
+          "update_interval": "更新間隔（分）"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "更新",
+      "description": "Trelloデータの即時更新を強制します。",
+      "fields": {
+        "config_entry_id": {
+          "name": "設定エントリID",
+          "description": "更新する設定エントリのID。省略した場合、すべてのエントリが更新されます。"
+        }
+      }
+    }
+  }
+}

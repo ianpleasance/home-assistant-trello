@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Anslut till Trello",
+        "description": "Ange dina Trello API-uppgifter. Hämta din API-nyckel och generera en token på: {docs_url}",
+        "data": {
+          "api_key": "API-nyckel",
+          "api_token": "API-token"
+        }
+      },
+      "boards": {
+        "title": "Välj anslagstavlor",
+        "description": "Välj de Trello-tavlor du vill övervaka. {board_count} tavlor tillgängliga.",
+        "data": {
+          "boards": "Tavlor att övervaka",
+          "update_interval": "Uppdateringsintervall (minuter)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Det gick inte att ansluta till Trello. Kontrollera dina uppgifter.",
+      "invalid_auth": "Ogiltig API-nyckel eller token. Kontrollera dina uppgifter.",
+      "unknown": "Oväntat fel inträffade."
+    },
+    "abort": {
+      "already_configured": "Det här Trello-kontot är redan konfigurerat.",
+      "no_boards": "Inga anslagstavlor hittades på ditt Trello-konto."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Trello-alternativ",
+        "description": "Konfigurera uppdateringsinställningar.",
+        "data": {
+          "update_interval": "Uppdateringsintervall (minuter)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Uppdatera",
+      "description": "Tvingar en omedelbar uppdatering av Trello-data.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Konfigurationspost-ID",
+          "description": "ID för posten som ska uppdateras. Om utelämnat uppdateras alla poster."
+        }
+      }
+    }
+  }
+}

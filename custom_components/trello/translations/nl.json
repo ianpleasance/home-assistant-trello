@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Verbinding maken met Trello",
+        "description": "Voer uw Trello API-gegevens in. Haal uw API-sleutel op en genereer een token op: {docs_url}",
+        "data": {
+          "api_key": "API-sleutel",
+          "api_token": "API-token"
+        }
+      },
+      "boards": {
+        "title": "Selecteer boards",
+        "description": "Selecteer de Trello-boards die u wilt bewaken. {board_count} boards beschikbaar.",
+        "data": {
+          "boards": "Te bewaken boards",
+          "update_interval": "Updateinterval (minuten)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbinding met Trello mislukt. Controleer uw gegevens.",
+      "invalid_auth": "Ongeldige API-sleutel of token. Controleer uw gegevens.",
+      "unknown": "Onverwachte fout opgetreden."
+    },
+    "abort": {
+      "already_configured": "Dit Trello-account is al geconfigureerd.",
+      "no_boards": "Geen boards gevonden in uw Trello-account."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Trello-opties",
+        "description": "Updateinstellingen configureren.",
+        "data": {
+          "update_interval": "Updateinterval (minuten)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Vernieuwen",
+      "description": "Forceert een onmiddellijke vernieuwing van Trello-gegevens.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Configuratie-invoer-ID",
+          "description": "ID van de te vernieuwen invoer. Als weggelaten worden alle invoeren vernieuwd."
+        }
+      }
+    }
+  }
+}

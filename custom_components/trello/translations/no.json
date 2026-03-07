@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Koble til Trello",
+        "description": "Skriv inn Trello API-legitimasjonen din. Hent API-nøkkel og generer token på: {docs_url}",
+        "data": {
+          "api_key": "API-nøkkel",
+          "api_token": "API-token"
+        }
+      },
+      "boards": {
+        "title": "Velg tavler",
+        "description": "Velg Trello-tavlene du vil overvåke. {board_count} tavler tilgjengelig.",
+        "data": {
+          "boards": "Tavler som overvåkes",
+          "update_interval": "Oppdateringsintervall (minutter)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Tilkobling til Trello mislyktes. Sjekk legitimasjonen din.",
+      "invalid_auth": "Ugyldig API-nøkkel eller token. Sjekk legitimasjonen din.",
+      "unknown": "Uventet feil oppstod."
+    },
+    "abort": {
+      "already_configured": "Denne Trello-kontoen er allerede konfigurert.",
+      "no_boards": "Ingen tavler funnet på Trello-kontoen din."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Trello-innstillinger",
+        "description": "Konfigurer oppdateringsinnstillinger.",
+        "data": {
+          "update_interval": "Oppdateringsintervall (minutter)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Oppdater",
+      "description": "Tvinger en umiddelbar oppdatering av Trello-data.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Konfigurasjonsoppføring-ID",
+          "description": "ID for oppføringen som skal oppdateres. Hvis utelatt oppdateres alle oppføringer."
+        }
+      }
+    }
+  }
+}

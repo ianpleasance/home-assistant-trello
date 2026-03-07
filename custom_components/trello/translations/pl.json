@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Połącz z Trello",
+        "description": "Wprowadź dane API Trello. Pobierz klucz API i wygeneruj token na: {docs_url}",
+        "data": {
+          "api_key": "Klucz API",
+          "api_token": "Token API"
+        }
+      },
+      "boards": {
+        "title": "Wybierz tablice",
+        "description": "Wybierz tablice Trello do monitorowania. Dostępnych tablic: {board_count}.",
+        "data": {
+          "boards": "Tablice do monitorowania",
+          "update_interval": "Interwał aktualizacji (minuty)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nie można połączyć się z Trello. Sprawdź swoje dane.",
+      "invalid_auth": "Nieprawidłowy klucz API lub token. Sprawdź swoje dane.",
+      "unknown": "Wystąpił nieoczekiwany błąd."
+    },
+    "abort": {
+      "already_configured": "To konto Trello jest już skonfigurowane.",
+      "no_boards": "Nie znaleziono tablic na koncie Trello."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opcje Trello",
+        "description": "Skonfiguruj ustawienia aktualizacji.",
+        "data": {
+          "update_interval": "Interwał aktualizacji (minuty)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Odśwież",
+      "description": "Wymusza natychmiastowe odświeżenie danych Trello.",
+      "fields": {
+        "config_entry_id": {
+          "name": "ID wpisu konfiguracji",
+          "description": "ID wpisu do odświeżenia. Jeśli pominięto, odświeżane są wszystkie wpisy."
+        }
+      }
+    }
+  }
+}

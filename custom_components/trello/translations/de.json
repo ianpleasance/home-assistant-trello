@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mit Trello verbinden",
+        "description": "Geben Sie Ihre Trello-API-Zugangsdaten ein. API-Schlüssel und Token erhalten Sie unter: {docs_url}",
+        "data": {
+          "api_key": "API-Schlüssel",
+          "api_token": "API-Token"
+        }
+      },
+      "boards": {
+        "title": "Boards auswählen",
+        "description": "Wählen Sie die Trello-Boards aus, die Sie überwachen möchten. {board_count} Boards verfügbar.",
+        "data": {
+          "boards": "Zu überwachende Boards",
+          "update_interval": "Aktualisierungsintervall (Minuten)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zu Trello fehlgeschlagen. Bitte überprüfen Sie Ihre Zugangsdaten.",
+      "invalid_auth": "Ungültiger API-Schlüssel oder Token. Bitte überprüfen Sie Ihre Zugangsdaten.",
+      "unknown": "Unerwarteter Fehler aufgetreten."
+    },
+    "abort": {
+      "already_configured": "Dieses Trello-Konto ist bereits konfiguriert.",
+      "no_boards": "Keine Boards in Ihrem Trello-Konto gefunden."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Trello-Optionen",
+        "description": "Aktualisierungseinstellungen konfigurieren.",
+        "data": {
+          "update_interval": "Aktualisierungsintervall (Minuten)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Aktualisieren",
+      "description": "Erzwingt eine sofortige Aktualisierung der Trello-Daten.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Konfigurationseintrag-ID",
+          "description": "ID des zu aktualisierenden Eintrags. Wenn leer, werden alle aktualisiert."
+        }
+      }
+    }
+  }
+}

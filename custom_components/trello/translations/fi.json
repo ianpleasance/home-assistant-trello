@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Yhdistä Trelloon",
+        "description": "Syötä Trello API -tunnuksesi. Hae API-avaimesi ja luo tunnus osoitteessa: {docs_url}",
+        "data": {
+          "api_key": "API-avain",
+          "api_token": "API-tunnus"
+        }
+      },
+      "boards": {
+        "title": "Valitse taulut",
+        "description": "Valitse seurattavat Trello-taulut. Saatavilla {board_count} taulua.",
+        "data": {
+          "boards": "Seurattavat taulut",
+          "update_interval": "Päivitysväli (minuutit)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Yhteys Trelloon epäonnistui. Tarkista tunnuksesi.",
+      "invalid_auth": "Virheellinen API-avain tai tunnus. Tarkista tunnuksesi.",
+      "unknown": "Odottamaton virhe tapahtui."
+    },
+    "abort": {
+      "already_configured": "Tämä Trello-tili on jo määritetty.",
+      "no_boards": "Trello-tililtäsi ei löytynyt tauluja."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Trello-asetukset",
+        "description": "Määritä päivitysasetukset.",
+        "data": {
+          "update_interval": "Päivitysväli (minuutit)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Päivitä",
+      "description": "Pakottaa välittömän Trello-tietojen päivityksen.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Konfiguraatiomerkinnän tunnus",
+          "description": "Päivitettävän merkinnän tunnus. Jos jätetään tyhjäksi, kaikki merkinnät päivitetään."
+        }
+      }
+    }
+  }
+}

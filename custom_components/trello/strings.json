@@ -38,5 +38,17 @@
         }
       }
     }
+  },
+  "services": {
+    "refresh": {
+      "name": "Refresh",
+      "description": "Force an immediate refresh of Trello data for one or all config entries.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Config Entry ID",
+          "description": "The config entry ID to refresh. If omitted, all entries are refreshed."
+        }
+      }
+    }
   }
 }

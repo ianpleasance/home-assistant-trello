@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Conectar con Trello",
+        "description": "Introduzca sus credenciales de API de Trello. Obtenga su clave API y genere un token en: {docs_url}",
+        "data": {
+          "api_key": "Clave API",
+          "api_token": "Token API"
+        }
+      },
+      "boards": {
+        "title": "Seleccionar tableros",
+        "description": "Seleccione los tableros de Trello que desea monitorizar. {board_count} tableros disponibles.",
+        "data": {
+          "boards": "Tableros a monitorizar",
+          "update_interval": "Intervalo de actualización (minutos)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se pudo conectar a Trello. Compruebe sus credenciales.",
+      "invalid_auth": "Clave API o token no válidos. Compruebe sus credenciales.",
+      "unknown": "Se produjo un error inesperado."
+    },
+    "abort": {
+      "already_configured": "Esta cuenta de Trello ya está configurada.",
+      "no_boards": "No se encontraron tableros en su cuenta de Trello."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opciones de Trello",
+        "description": "Configurar ajustes de actualización.",
+        "data": {
+          "update_interval": "Intervalo de actualización (minutos)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Actualizar",
+      "description": "Fuerza una actualización inmediata de los datos de Trello.",
+      "fields": {
+        "config_entry_id": {
+          "name": "ID de entrada de configuración",
+          "description": "ID de la entrada a actualizar. Si se omite, se actualizan todas."
+        }
+      }
+    }
+  }
+}

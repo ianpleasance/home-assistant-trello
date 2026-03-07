@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connetti a Trello",
+        "description": "Inserisci le credenziali API di Trello. Ottieni la chiave API e genera un token su: {docs_url}",
+        "data": {
+          "api_key": "Chiave API",
+          "api_token": "Token API"
+        }
+      },
+      "boards": {
+        "title": "Seleziona board",
+        "description": "Seleziona le board Trello da monitorare. {board_count} board disponibili.",
+        "data": {
+          "boards": "Board da monitorare",
+          "update_interval": "Intervallo di aggiornamento (minuti)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Connessione a Trello non riuscita. Controlla le tue credenziali.",
+      "invalid_auth": "Chiave API o token non validi. Controlla le tue credenziali.",
+      "unknown": "Si è verificato un errore imprevisto."
+    },
+    "abort": {
+      "already_configured": "Questo account Trello è già configurato.",
+      "no_boards": "Nessuna board trovata nel tuo account Trello."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opzioni Trello",
+        "description": "Configura le impostazioni di aggiornamento.",
+        "data": {
+          "update_interval": "Intervallo di aggiornamento (minuti)"
+        }
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Aggiorna",
+      "description": "Forza un aggiornamento immediato dei dati Trello.",
+      "fields": {
+        "config_entry_id": {
+          "name": "ID voce di configurazione",
+          "description": "ID della voce da aggiornare. Se omesso, vengono aggiornate tutte le voci."
+        }
+      }
+    }
+  }
+}
